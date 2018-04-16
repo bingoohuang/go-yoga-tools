@@ -15,4 +15,4 @@
 .idea
 vendor
 bindata.go
-go-yoga-tools
+go-yoga-tools*

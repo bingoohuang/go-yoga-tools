@@ -73,12 +73,12 @@ func init() {
 func main() {
 	r := mux.NewRouter()
 
-	handleFunc(r, "/", serveHome, true, true)
-	handleFunc(r, "/searchTenants", searchTenants, false, true)
-	handleFunc(r, "/queryCourseTypes", queryCourseTypes, false, true)
-	handleFunc(r, "/updateCourseTypes", updateCourseTypes, false, true)
+	handleFunc(r, "/", serveHome, true)
+	handleFunc(r, "/searchTenants", searchTenants, false)
+	handleFunc(r, "/queryCourseTypes", queryCourseTypes, false)
+	handleFunc(r, "/updateCourseTypes", updateCourseTypes, false)
 	if writeAuthRequired {
-		handleFunc(r, "/login", serveLogin, false, true)
+		handleFunc(r, "/login", serveLogin, false)
 	}
 	http.Handle("/", r)
 
@@ -90,12 +90,8 @@ func main() {
 	}
 }
 
-func handleFunc(r *mux.Router, path string, f func(http.ResponseWriter, *http.Request), requiredGzip, requiredBasicAuth bool) {
+func handleFunc(r *mux.Router, path string, f func(http.ResponseWriter, *http.Request), requiredGzip bool) {
 	wrap := go_utils.DumpRequest(f)
-	if requiredBasicAuth && authBasic {
-		wrap = go_utils.RandomPoemBasicAuth(wrap)
-	}
-
 	if requiredGzip {
 		wrap = go_utils.GzipHandlerFunc(wrap)
 	}

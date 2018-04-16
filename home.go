@@ -35,7 +35,7 @@ func mergeCss() string {
 func mergeScripts() string {
 	return mergeStatic(";",
 		"jquery-3.2.1.min.js", "jquery.contextMenu.js",
-		"index.js", "jquery.loading.js", "courseTypes.js", "searchTenants.js")
+		"index.js", "jquery.loading.js", "courseTypes.js", "searchTenants.js", "login.js")
 }
 
 func mergeStatic(seperate string, statics ...string) string {
@@ -61,9 +61,8 @@ func (t *CookieValue) ExpiredTime() time.Time {
 }
 
 func loginHtml(w http.ResponseWriter, r *http.Request) string {
-	exportDatabase := `<a class="exportDatabase hide" target="_blank">Export Database</a>`
 	if !writeAuthRequired {
-		return exportDatabase
+		return ""
 	}
 
 	loginCookie := &CookieValue{}
@@ -73,10 +72,10 @@ func loginHtml(w http.ResponseWriter, r *http.Request) string {
 	}
 
 	if err != nil {
-		return `<button class="loginButton">Login</button>`
+		return `<script>$.login()</script>`
 	}
 
-	return exportDatabase + `<img class="loginAvatar" src="` + loginCookie.Avatar +
+	return `<img class="loginAvatar" src="` + loginCookie.Avatar +
 		`"/><span class="loginName">` + loginCookie.Name + `</span>`
 }
 
