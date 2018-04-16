@@ -35,6 +35,7 @@
 
                 $('#toolsDiv').toggle(hasContent)
                 clearActiveMerchant()
+                $('#resultArea').html('')
                 $('#tenantsList').html(tenantsHtml)
                 $('#tenantsList span:first-child').click()
             },
@@ -62,6 +63,7 @@
         $.activeClassifier = $this.attr('classifier')
         $.activeMerchantName = $this.text()
 
+        $('#resultArea').html('')
         $('#tidtcodeSpan').html('&nbsp;<span title="tcode" >' + $.activeMerchantCode + '</span>' +
             '&nbsp;<span title="home area">' + $.activeHomeArea + '</span>' +
             '&nbsp;<span><a href="' + createUrl() + '" target="_blank">Home</a></span>')

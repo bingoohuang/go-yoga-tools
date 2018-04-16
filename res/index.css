@@ -3,6 +3,16 @@
     font-weight: bold;
 }
 
+#tenantsList span {
+    margin-right: 10px;
+    border: 1px solid darkgray;
+}
+
+#tenantsList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .hide {
     display: none;
 }
@@ -17,6 +27,11 @@ table td {
     white-space: pre;
     text-align: center;
 }
+
+thead {
+    background-color: aliceblue;
+}
+
 
 .error, .changedCell {
     color: red;

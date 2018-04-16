@@ -1,10 +1,10 @@
 package main
 
 import (
-	"net/http"
 	"bytes"
 	"github.com/bingoohuang/go-utils"
 	"io"
+	"net/http"
 )
 
 func serveFavicon(w http.ResponseWriter, r *http.Request) {
@@ -20,5 +20,3 @@ func HandleStaticResource(path string, w http.ResponseWriter) {
 	w.WriteHeader(http.StatusOK)
 	io.Copy(w, buffer)
 }
-
-

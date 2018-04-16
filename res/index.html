@@ -10,24 +10,24 @@
     </style>
 </head>
 <body>
+<div style="text-align:center;white-space:nowrap;">
+    <div id="tenantDiv">
+        <div>商户：<input placeholder="商户名称/tcode/tid" id="tenantSearchKey"></div>
+        <div id="tenantsList"></div>
+        <div id="tidtcodeSpan"></div>
+    </div>
 
-<div id="tenantDiv">
-    <div>商户：<input placeholder="商户名称/tcode/tid" id="tenantSearchKey"></div>
-    <div id="tenantsList"></div>
-    <div id="tidtcodeSpan"></div>
+
+    <div id="toolsDiv" class="hide">
+        Tools:
+        <a href="javascript:void(0)" onclick="$.maintainCourseTypes()">课种/分店</a>
+    </div>
+
+
+    <div id="resultArea">
+
+    </div>
 </div>
-
-
-<div id="toolsDiv" class="hide">
-    Tools:
-    <a href="javascript:void(0)" onclick="$.maintainCourseTypes()">课种/分店</a>
-</div>
-
-
-<div id="resultArea">
-
-</div>
-
 
 <script>
     var contextPath = '${contextPath}'
@@ -36,7 +36,7 @@
 </script>
 
 <div id="loginDiv">
-<LOGIN/>
+    <LOGIN/>
 </div>
 </body>
 </html>
