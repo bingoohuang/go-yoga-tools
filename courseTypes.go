@@ -1,12 +1,12 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
-	"strings"
 	"github.com/bingoohuang/go-utils"
-	"net/url"
 	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 type CourseType struct {
@@ -32,7 +32,8 @@ func updateCourseTypes(w http.ResponseWriter, req *http.Request) {
 			proxy = southProxy
 		}
 
-		httpGet(proxy + "/clearCache?key=" + url.QueryEscape("westcache:yoga:"+tcode+":CourseTypeDaoImpl.queryCourseTypes"))
+		httpGet(proxy + "/clearCache?keys=" + url.QueryEscape("westcache:yoga:"+tcode+":CourseTypeDaoImpl.queryCourseTypes"+
+			","+"westcache:yoga:"+tcode+":MerchantConfigBoService.getMerchantConfig"))
 	}
 }
 

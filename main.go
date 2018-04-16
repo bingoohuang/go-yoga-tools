@@ -102,4 +102,3 @@ func handleFunc(r *mux.Router, path string, f func(http.ResponseWriter, *http.Re
 
 	r.HandleFunc(contextPath+path, wrap)
 }
-

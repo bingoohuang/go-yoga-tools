@@ -2,7 +2,6 @@
     $('#tenantSearchKey').keydown(function (event) {
         var keyCode = event.keyCode || event.which
         if (keyCode == 13) {
-
             var tenantSearchKey = $.trim($('#tenantSearchKey').val())
             if (tenantSearchKey === '') {
                 alert("please input tid/tcode/tname")

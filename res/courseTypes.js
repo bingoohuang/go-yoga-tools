@@ -29,7 +29,7 @@
 
                         html += '<tr class="existingRows" CourseTypeId="' + r.CourseTypeId + '">'
                         html += '<td pname="SHOW_ORDER" class="contentEditable">' + r.ShowOrder + '</td>'
-                        html += '<td pname="COURSE_TYPE_ID" class="contentEditable">' + r.CourseTypeId + '</td>'
+                        html += '<td pname="COURSE_TYPE_ID">' + r.CourseTypeId + '</td>'
                         html += '<td pname="COURSE_TYPE_NAME" class="contentEditable">' + r.CourseTypeName + '</td>'
                         html += '<td pname="SUBSCRIBE_TYPE"  oldValue="' + r.SubscribeType + '">'
                         html += '<input type="radio" name="SubscribeType_' + r.CourseTypeId + '" value="1" ' + (r.SubscribeType === '1' ? 'checked' : '') + '>小班课'
@@ -98,8 +98,11 @@
 
                     $table.find('tbody tr.newRows').each(function (index, tr) {
                         var $tds = $(tr).find('td')
-                        sqls.push('insert into tt_d_course_type(SHOW_ORDER, COURSE_TYPE_ID, COURSE_TYPE_NAME, SUBSCRIBE_TYPE, MIN_SUBSCRIPTIONS, `STATE`, CREATE_TIME, UPDATE_TIME)' +
-                            " values('" + $tds.eq(0).text() + "', '" + $tds.eq(1).text() + "', '" + $tds.eq(2).text() + "', '" + $tds.eq(3).attr('newValue') + "','" + $tds.eq(4).text() + "', '1', now(), now())")
+                        var courseTypeId = $tds.eq(1).text();
+                        sqls.push('insert into tt_d_course_type(SHOW_ORDER, COURSE_TYPE_ID, COURSE_TYPE_NAME, SUBSCRIBE_TYPE, MIN_SUBSCRIPTIONS, STATE, CREATE_TIME, UPDATE_TIME)' +
+                            " values('" + $tds.eq(0).text() + "', '" + courseTypeId + "', '" + $tds.eq(2).text() + "', '" + $tds.eq(3).attr('newValue') + "','" + $tds.eq(4).text() + "', '1', now(), now())")
+                        sqls.push("insert into tt_f_course_category select '" + courseTypeId + "',COURSE_ID,STATE,NOW(),NOW() from tt_f_course_category where COURSE_TYPE_ID = '2001'")
+                        sqls.push("insert into tt_f_cardtype_rule select CARD_TYPE_ID, '" + courseTypeId + "',DEDU_TIMES, PRIORITY_ORDER, STATE,NOW(),NOW() from tt_f_cardtype_rule where COURSE_TYPE_ID = '2001'")
                     })
 
                     $.ajax({

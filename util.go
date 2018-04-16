@@ -1,12 +1,12 @@
 package main
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"database/sql"
-	"github.com/bingoohuang/go-utils"
 	"errors"
-	"strings"
+	"github.com/bingoohuang/go-utils"
+	_ "github.com/go-sql-driver/mysql"
 	"net/http"
+	"strings"
 )
 
 func findMerchantDataSource(tid string) (string, error) {
@@ -91,7 +91,7 @@ func executeTenantSqls(w http.ResponseWriter, req *http.Request, querySqls []str
 		result := go_utils.ExecuteSql(db, querySql, 100)
 		results[index] = result
 		if result.Error != nil {
-			http.Error(w, err.Error(), 405)
+			http.Error(w, result.Error.Error(), 405)
 			return results, false
 		}
 
