@@ -15,6 +15,7 @@ table {
 table td {
     border: 1px solid #eeeeee;
     white-space: pre;
+    text-align: center;
 }
 
 .error, .changedCell {

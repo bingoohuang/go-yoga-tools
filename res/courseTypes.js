@@ -21,7 +21,7 @@
                 var hasContent = content && content.length
                 var maxShowOrder = 0
                 if (hasContent) {
-                    html += "<table><thead><td>显示顺序</td><td>课种编码</td><td>课种名称</td><td>预订类型</td><td>最少预订人数</td></thead><tbody>"
+                    html += "<table><thead><td>顺序</td><td>编码</td><td>课种名称</td><td>预订类型</td><td>最少预订数</td></thead><tbody>"
                     for (var j = 0; j < content.length; j++) {
                         var r = content[j]
 

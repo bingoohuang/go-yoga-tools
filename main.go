@@ -74,6 +74,7 @@ func main() {
 	r := mux.NewRouter()
 
 	handleFunc(r, "/", serveHome, true)
+	handleFunc(r, "/favicon.ico", serveFavicon, false)
 	handleFunc(r, "/searchTenants", searchTenants, false)
 	handleFunc(r, "/queryCourseTypes", queryCourseTypes, false)
 	handleFunc(r, "/updateCourseTypes", updateCourseTypes, false)
