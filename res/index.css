@@ -1,0 +1,26 @@
+#tenantsList .active {
+    background-color: #ccc;
+    font-weight: bold;
+}
+
+.hide {
+    display: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table td {
+    border: 1px solid #eeeeee;
+    white-space: pre;
+}
+
+.error, .changedCell {
+    color: red;
+}
+
+.newRows {
+    background-color: gold !important;
+}
