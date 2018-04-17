@@ -36,7 +36,7 @@ func init() {
 	portArg := flag.Int("port", 8979, "Port to serve.")
 	dataSourceArg := flag.String("dataSource", "user:pass@tcp(127.0.0.1:3306)/?charset=utf8", "dataSource string.")
 	writeAuthRequiredArg := flag.Bool("writeAuthRequired", false, "write auth required")
-	encryptKeyArg := flag.String("key", "", "key to encryption or decryption")
+	encryptKeyArg := flag.String("encryptKey", "B185277FC6C4E6AB", "key to encryption or decryption")
 	corpIdArg := flag.String("corpId", "", "corpId")
 	corpSecretArg := flag.String("corpSecret", "", "cropId")
 	agentIdArg := flag.String("agentId", "", "agentId")
@@ -44,8 +44,8 @@ func init() {
 	cookieNameArg := flag.String("cookieName", "yoga_qyapi", "cookieName")
 	devModeArg := flag.Bool("devMode", false, "devMode(disable js/css minify)")
 	authBasicArg := flag.Bool("authBasic", false, "authBasic based on poems")
-	northProxycArg := flag.String("northProxy", "", "northProxy")
-	southProxycArg := flag.String("southProxy", "", "southProxy")
+	northProxycArg := flag.String("northProxy", "http://127.0.0.1:8092", "northProxy")
+	southProxycArg := flag.String("southProxy", "http://127.0.0.1:8082", "southProxy")
 
 	flag.Parse()
 

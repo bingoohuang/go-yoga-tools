@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/bingoohuang/go-utils"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -22,18 +23,25 @@ func updateCourseTypes(w http.ResponseWriter, req *http.Request) {
 	tcode := strings.TrimSpace(req.FormValue("tcode"))
 	activeHomeArea := strings.TrimSpace(req.FormValue("activeHomeArea"))
 	sqls := go_utils.SplitSqls(courseTypesSqls, ';')
-	_, ok := executeTenantSqls(w, req, sqls)
-	if ok {
-		// clear redis cache
-		proxy := ""
-		if activeHomeArea == "south-center" {
-			proxy = northProxy
-		} else if activeHomeArea == "north-center" {
-			proxy = southProxy
-		}
 
-		httpGet(proxy + "/clearCache?keys=" + url.QueryEscape("westcache:yoga:"+tcode+":CourseTypeDaoImpl.queryCourseTypes"+
-			","+"westcache:yoga:"+tcode+":MerchantConfigBoService.getMerchantConfig"))
+	executeTenantSqls(w, req, sqls)
+
+	// clear redis cache
+	proxy := ""
+	if activeHomeArea == "south-center" {
+		proxy = southProxy
+	} else if activeHomeArea == "north-center" {
+		proxy = northProxy
+	}
+
+	keys := strings.Replace("westcache:yoga:{tcode}:CourseTypeDaoImpl.queryCourseTypes,"+
+		"westcache:yoga:{tcode}:MerchantConfigBoService.getMerchantConfig", "{tcode}", tcode, -1)
+	log.Println("clear cache for keys", keys)
+	httpResult, err := httpGet(proxy + "/clearCache?keys=" + url.QueryEscape(keys))
+	if err != nil {
+		log.Println("http get", proxy, "fail", err.Error())
+	} else {
+		log.Println("http get result", string(httpResult))
 	}
 }
 
