@@ -20,12 +20,14 @@
                 var html = '<div id="resultDiv' + resultId + '">'
                 var hasContent = content && content.length
                 var maxShowOrder = 0
+                var maxCoureTypeId = 0
                 if (hasContent) {
                     html += "<table><thead><td>顺序</td><td>编码</td><td>课种名称</td><td>预订类型</td><td>最少预订数</td></thead><tbody>"
                     for (var j = 0; j < content.length; j++) {
                         var r = content[j]
 
                         if (r.ShowOrder > maxShowOrder) maxShowOrder = r.ShowOrder
+                        if (r.CourseTypeId > maxCoureTypeId) maxCoureTypeId = r.CourseTypeId
 
                         html += '<tr class="existingRows" CourseTypeId="' + r.CourseTypeId + '">'
                         html += '<td pname="SHOW_ORDER" class="contentEditable">' + r.ShowOrder + '</td>'
@@ -63,7 +65,9 @@
 
                 $table.find('.new').click(function () {
                     var showOrder = ++maxShowOrder
-                    var newRowHtml = '<tr class="newRows"><td class="contentEditable">' + showOrder + '</td><td class="contentEditable"></td><td class="contentEditable"></td>'
+                    var newRowHtml = '<tr class="newRows"><td class="contentEditable">' + showOrder + '</td>'
+                    newRowHtml += '<td class="contentEditable">' + (maxCoureTypeId + 1) + '</td>'
+                    newRowHtml += '<td class="contentEditable"></td>'
                     newRowHtml += '<td newValue="1">'
                     newRowHtml += '<input type="radio" name="SubscribeType_' + showOrder + '" value="1" checked>小班课'
                     newRowHtml += '<input type="radio" name="SubscribeType_' + showOrder + '" value="2">私教课'

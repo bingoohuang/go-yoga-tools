@@ -21,7 +21,7 @@
             success: function (content, textStatus, request) {
                 var tenantsHtml = ''
 
-                var hasContent = content && content.length;
+                var hasContent = content && content.length
                 if (hasContent) {
                     for (var j = 0; j < content.length; j++) {
                         tenantsHtml += '<span tid="' + content[j].MerchantId
@@ -33,7 +33,7 @@
                     }
                 }
 
-                $('#toolsDiv').toggle(hasContent)
+                $('#toolsDiv').toggle(!!hasContent)
                 clearActiveMerchant()
                 $('#resultArea').html('')
                 $('#tenantsList').html(tenantsHtml)

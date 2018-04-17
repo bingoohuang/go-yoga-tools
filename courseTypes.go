@@ -28,10 +28,15 @@ func updateCourseTypes(w http.ResponseWriter, req *http.Request) {
 
 	// clear redis cache
 	proxy := ""
-	if activeHomeArea == "south-center" {
+	if strings.Contains(activeHomeArea, "south") {
 		proxy = southProxy
-	} else if activeHomeArea == "north-center" {
+	} else if strings.Contains(activeHomeArea, "north") {
 		proxy = northProxy
+	}
+
+	if proxy == "" {
+		log.Println("unknown proxy for home area", activeHomeArea)
+		return
 	}
 
 	keys := strings.Replace("westcache:yoga:{tcode}:CourseTypeDaoImpl.queryCourseTypes,"+
