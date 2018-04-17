@@ -66,7 +66,7 @@
                 $table.find('.new').click(function () {
                     var showOrder = ++maxShowOrder
                     var newRowHtml = '<tr class="newRows"><td class="contentEditable">' + showOrder + '</td>'
-                    newRowHtml += '<td class="contentEditable">' + (maxCoureTypeId + 1) + '</td>'
+                    newRowHtml += '<td class="contentEditable">' + (++maxCoureTypeId) + '</td>'
                     newRowHtml += '<td class="contentEditable"></td>'
                     newRowHtml += '<td newValue="1">'
                     newRowHtml += '<input type="radio" name="SubscribeType_' + showOrder + '" value="1" checked>小班课'
