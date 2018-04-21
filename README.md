@@ -2,4 +2,5 @@
 yoga-system tools
 
 ## 课种/分店
-![image](https://user-images.githubusercontent.com/1940588/39078905-ad6a3b62-4543-11e8-9e7c-4629dbcb80ef.png)
+![image](https://user-images.githubusercontent.com/1940588/39078918-e0228ca8-4543-11e8-85ce-1b2d4a80ce57.png)
+
