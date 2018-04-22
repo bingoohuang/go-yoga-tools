@@ -32,7 +32,6 @@ thead {
     background-color: aliceblue;
 }
 
-
 .error, .changedCell {
     color: red;
 }
@@ -55,4 +54,36 @@ thead {
     position: absolute;
     right: 3px;
     top: 3px;
+}
+
+#captchaSettingWrapper {
+    margin-top: 40px;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#mobileWrapper, #captchaValueWrapper, #expiredTimeWrapper {
+    width: 220px;
+    text-align: right;
+}
+
+#mobileWrapper div {
+    display: inline-block;
+}
+
+#captchaValueWrapper div {
+    display: inline-block;
+}
+
+#expiredTimeWrapper div {
+    display: inline-block;
+}
+
+#saveCaptchaBtn {
+    border: 1px solid #808080;
+    border-radius: 12px;
+    width: 46px;
+    vertical-align: middle;
+    display: inline-block;
 }

@@ -78,6 +78,7 @@ func main() {
 	handleFunc(r, "/searchTenants", searchTenants, false)
 	handleFunc(r, "/queryCourseTypes", queryCourseTypes, false)
 	handleFunc(r, "/updateCourseTypes", updateCourseTypes, false)
+	handleFunc(r, "/saveCaptcha", saveCaptcha, false)
 	if writeAuthRequired {
 		handleFunc(r, "/login", serveLogin, false)
 	}
