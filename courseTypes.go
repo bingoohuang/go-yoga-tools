@@ -27,12 +27,7 @@ func updateCourseTypes(w http.ResponseWriter, req *http.Request) {
 	executeTenantSqls(w, req, sqls)
 
 	// clear redis cache
-	proxy := ""
-	if strings.Contains(activeHomeArea, "south") {
-		proxy = southProxy
-	} else if strings.Contains(activeHomeArea, "north") {
-		proxy = northProxy
-	}
+	proxy := getProxy(activeHomeArea)
 
 	if proxy == "" {
 		log.Println("unknown proxy for home area", activeHomeArea)
@@ -48,6 +43,16 @@ func updateCourseTypes(w http.ResponseWriter, req *http.Request) {
 	} else {
 		log.Println("http get result", string(httpResult))
 	}
+}
+
+func getProxy(activeHomeArea string) string {
+	proxy := ""
+	if strings.Contains(activeHomeArea, "south") {
+		proxy = southProxy
+	} else if strings.Contains(activeHomeArea, "north") {
+		proxy = northProxy
+	}
+	return proxy
 }
 
 func httpGet(url string) ([]byte, error) {

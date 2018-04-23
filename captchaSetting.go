@@ -3,26 +3,30 @@ package main
 import (
 	"net/http"
 	"strings"
-	"log"
+	"github.com/bingoohuang/go-utils"
 )
 
 func saveCaptcha(w http.ResponseWriter, req *http.Request) {
 	mobile := strings.TrimSpace(req.FormValue("mobile"))
-	captcha := strings.TrimSpace(req.FormValue("captcha"))
+	activeHomeArea := strings.TrimSpace(req.FormValue("activeHomeArea"))
+	activeClassifier := strings.TrimSpace(req.FormValue("activeClassifier"))
+	proxy := getProxy(activeHomeArea)
 
-	key := "captcha:" + mobile + ":/login"
-	httpResult, err := httpGet(southProxy + "/setCache?keys=" + key + "&value=" + captcha + "&ttl=30s")
-	httpResult1, err1 := httpGet(northProxy + "/setCache?keys=" + key + "&value=" + captcha + "&ttl=30s")
+	key := ""
+	if activeClassifier == "et" {
+		key = "captcha:" + mobile + ":/login/sms"
+	} else {
+		key = "captcha:" + mobile + ":/login"
+	}
+	setCacheUrl := proxy + "/setCache?key=" + key + "&value=1234&ttl=60s"
 
+	httpResult, err := go_utils.HttpGet(setCacheUrl)
+
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	if err != nil {
-		log.Println("http get", southProxy, "fail", err.Error())
+		http.Error(w, err.Error(), 405)
 	} else {
-		log.Println("http get result", string(httpResult))
+		w.Write(httpResult)
 	}
 
-	if err1 != nil {
-		log.Println("http get", northProxy, "fail", err.Error())
-	} else {
-		log.Println("http get result", string(httpResult1))
-	}
 }

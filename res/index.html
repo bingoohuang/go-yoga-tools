@@ -21,24 +21,14 @@
     <div id="toolsDiv" class="hide">
         Tools:
         <a href="javascript:void(0)" onclick="$.maintainCourseTypes()">课种/分店</a>
+        <a href="javascript:void(0)" onclick="$.setCaptcha()">手机验证码</a>
     </div>
 
     <div id="resultArea">
 
     </div>
 
-    <div id="captchaSettingWrapper">
-        <div id="title">验证码设置
-            <span id="saveCaptchaBtn" , onclick="$.saveCaptcha()">save</span>
-        </div>
-        <div id="mobileWrapper">
-            <div>手机号码：</div>
-            <input placeholder="手机号码" , id="mobileKey"/>
-        </div>
-        <div id="captchaValueWrapper">
-            <div>验证码：</div>
-            <input id="captchaValue" readonly value="1234">
-        </div>
+    <div id="captchaArea">
 
     </div>
 
