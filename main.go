@@ -12,40 +12,29 @@ import (
 )
 
 var (
-	contextPath       string
-	port              string
-	g_dataSource      string
-	writeAuthRequired bool
-	encryptKey        string
+	contextPath  string
+	port         string
+	g_dataSource *string
 
-	corpId      string
-	corpSecret  string
-	agentId     string
-	redirectUri string
+	devMode *bool // to disable css/js minify
 
-	cookieName string
-	devMode    bool // to disable css/js minify
-	authBasic  bool
+	northProxy *string
+	southProxy *string
 
-	northProxy string
-	southProxy string
+	authParam go_utils.MustAuthParam
 )
 
 func init() {
 	contextPathArg := flag.String("contextPath", "", "context path")
 	portArg := flag.Int("port", 8979, "Port to serve.")
-	dataSourceArg := flag.String("dataSource", "user:pass@tcp(127.0.0.1:3306)/?charset=utf8", "dataSource string.")
-	writeAuthRequiredArg := flag.Bool("writeAuthRequired", false, "write auth required")
-	encryptKeyArg := flag.String("encryptKey", "B185277FC6C4E6AB", "key to encryption or decryption")
-	corpIdArg := flag.String("corpId", "", "corpId")
-	corpSecretArg := flag.String("corpSecret", "", "cropId")
-	agentIdArg := flag.String("agentId", "", "agentId")
-	redirectUriArg := flag.String("redirectUri", "", "redirectUri")
-	cookieNameArg := flag.String("cookieName", "yoga_qyapi", "cookieName")
-	devModeArg := flag.Bool("devMode", false, "devMode(disable js/css minify)")
-	authBasicArg := flag.Bool("authBasic", false, "authBasic based on poems")
-	northProxycArg := flag.String("northProxy", "http://127.0.0.1:8092", "northProxy")
-	southProxycArg := flag.String("southProxy", "http://127.0.0.1:8082", "southProxy")
+	g_dataSource = flag.String("dataSource", "user:pass@tcp(127.0.0.1:3306)/?charset=utf8", "dataSource string.")
+
+	devMode = flag.Bool("devMode", false, "devMode(disable js/css minify)")
+
+	northProxy = flag.String("northProxy", "http://127.0.0.1:8092", "northProxy")
+	southProxy = flag.String("southProxy", "http://127.0.0.1:8082", "southProxy")
+
+	go_utils.PrepareMustAuthFlag(&authParam)
 
 	flag.Parse()
 
@@ -55,33 +44,16 @@ func init() {
 	}
 
 	port = strconv.Itoa(*portArg)
-	g_dataSource = *dataSourceArg
-	writeAuthRequired = *writeAuthRequiredArg
-	encryptKey = *encryptKeyArg
-	corpId = *corpIdArg
-	corpSecret = *corpSecretArg
-	agentId = *agentIdArg
-	redirectUri = *redirectUriArg
-	cookieName = *cookieNameArg
-	devMode = *devModeArg
-	authBasic = *authBasicArg
-
-	northProxy = *northProxycArg
-	southProxy = *southProxycArg
 }
 
 func main() {
 	r := mux.NewRouter()
 
 	handleFunc(r, "/", serveHome, true)
-	handleFunc(r, "/favicon.ico", serveFavicon, false)
+	handleFunc(r, "/favicon.ico", go_utils.ServeFavicon("res/favicon.ico", MustAsset, AssetInfo), false)
 	handleFunc(r, "/searchTenants", searchTenants, false)
 	handleFunc(r, "/queryCourseTypes", queryCourseTypes, false)
 	handleFunc(r, "/updateCourseTypes", updateCourseTypes, false)
-	handleFunc(r, "/saveCaptcha", saveCaptcha, false)
-	if writeAuthRequired {
-		handleFunc(r, "/login", serveLogin, false)
-	}
 	http.Handle("/", r)
 
 	fmt.Println("start to listen at ", port)
@@ -94,6 +66,7 @@ func main() {
 
 func handleFunc(r *mux.Router, path string, f func(http.ResponseWriter, *http.Request), requiredGzip bool) {
 	wrap := go_utils.DumpRequest(f)
+	wrap = go_utils.MustAuth(wrap, authParam)
 	if requiredGzip {
 		wrap = go_utils.GzipHandlerFunc(wrap)
 	}
