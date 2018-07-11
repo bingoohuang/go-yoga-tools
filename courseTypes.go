@@ -51,6 +51,8 @@ func getProxy(activeHomeArea string) string {
 		proxy = *southProxy
 	} else if strings.Contains(activeHomeArea, "north") {
 		proxy = *northProxy
+	} else if strings.Contains(activeHomeArea, "huanan") {
+		proxy = *huananProxy
 	}
 	return proxy
 }

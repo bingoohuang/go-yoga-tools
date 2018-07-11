@@ -24,12 +24,12 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func mergeCss() string {
-	return go_utils.MergeCss(MustAsset, "index.css", "jquery.contextMenu.css")
+	return go_utils.MergeCss(MustAsset, go_utils.FilterAssetNames(AssetNames(), ".css"))
 }
 
 func mergeScripts() string {
 	return go_utils.MergeJs(MustAsset,
-		"index.js", "jquery.loading.js", "courseTypes.js", "searchTenants.js")
+		go_utils.FilterAssetNames(AssetNames(), ".js"))
 }
 
 func loginHtml(w http.ResponseWriter, r *http.Request) string {
