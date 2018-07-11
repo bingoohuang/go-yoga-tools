@@ -29,6 +29,7 @@ var (
 
 	northProxy string
 	southProxy string
+	huananProxy string
 )
 
 func init() {
@@ -46,6 +47,7 @@ func init() {
 	authBasicArg := flag.Bool("authBasic", false, "authBasic based on poems")
 	northProxycArg := flag.String("northProxy", "http://127.0.0.1:8092", "northProxy")
 	southProxycArg := flag.String("southProxy", "http://127.0.0.1:8082", "southProxy")
+	huananProxycArg := flag.String("huananProxy", "http://127.0.0.1:8082", "huananProxy")
 
 	flag.Parse()
 
@@ -68,6 +70,7 @@ func init() {
 
 	northProxy = *northProxycArg
 	southProxy = *southProxycArg
+	huananProxy = *huananProxycArg
 }
 
 func main() {

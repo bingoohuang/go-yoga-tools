@@ -13,10 +13,10 @@ func saveCaptcha(w http.ResponseWriter, req *http.Request) {
 	proxy := getProxy(activeHomeArea)
 
 	key := ""
-	if activeClassifier == "et" {
-		key = "captcha:" + mobile + ":/login/sms"
-	} else {
+	if activeClassifier == "yoga" {
 		key = "captcha:" + mobile + ":/login"
+	} else {
+		key = "captcha:" + mobile + ":/login/sms"
 	}
 	setCacheUrl := proxy + "/setCache?key=" + key + "&value=1234&ttl=60s"
 
