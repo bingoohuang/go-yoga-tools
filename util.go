@@ -10,7 +10,7 @@ import (
 )
 
 func findMerchantDataSource(tid string) (string, error) {
-	db, err := sql.Open("mysql", g_dataSource)
+	db, err := sql.Open("mysql", *g_dataSource)
 	if err != nil {
 		return "", err
 	}

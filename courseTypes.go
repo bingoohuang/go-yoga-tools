@@ -48,9 +48,9 @@ func updateCourseTypes(w http.ResponseWriter, req *http.Request) {
 func getProxy(activeHomeArea string) string {
 	proxy := ""
 	if strings.Contains(activeHomeArea, "south") {
-		proxy = southProxy
+		proxy = *southProxy
 	} else if strings.Contains(activeHomeArea, "north") {
-		proxy = northProxy
+		proxy = *northProxy
 	}
 	return proxy
 }

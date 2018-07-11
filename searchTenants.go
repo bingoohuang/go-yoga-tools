@@ -29,7 +29,7 @@ func searchTenants(w http.ResponseWriter, req *http.Request) {
 		"FROM TR_F_MERCHANT WHERE MERCHANT_ID = '" + searchKey +
 		"' OR MERCHANT_CODE = '" + searchKey + "' OR MERCHANT_NAME LIKE '%" + searchKey + "%'"
 
-	db, err := sql.Open("mysql", g_dataSource)
+	db, err := sql.Open("mysql", *g_dataSource)
 	if err != nil {
 		http.Error(w, err.Error(), 405)
 		return

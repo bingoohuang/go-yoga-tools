@@ -30,6 +30,8 @@ var (
 	northProxy string
 	southProxy string
 	huananProxy string
+
+	authParam go_utils.MustAuthParam
 )
 
 func init() {
@@ -48,6 +50,8 @@ func init() {
 	northProxycArg := flag.String("northProxy", "http://127.0.0.1:8092", "northProxy")
 	southProxycArg := flag.String("southProxy", "http://127.0.0.1:8082", "southProxy")
 	huananProxycArg := flag.String("huananProxy", "http://127.0.0.1:8082", "huananProxy")
+
+	go_utils.PrepareMustAuthFlag(&authParam)
 
 	flag.Parse()
 
@@ -77,14 +81,10 @@ func main() {
 	r := mux.NewRouter()
 
 	handleFunc(r, "/", serveHome, true)
-	handleFunc(r, "/favicon.ico", serveFavicon, false)
+	handleFunc(r, "/favicon.ico", go_utils.ServeFavicon("res/favicon.ico", MustAsset, AssetInfo), false)
 	handleFunc(r, "/searchTenants", searchTenants, false)
 	handleFunc(r, "/queryCourseTypes", queryCourseTypes, false)
 	handleFunc(r, "/updateCourseTypes", updateCourseTypes, false)
-	handleFunc(r, "/saveCaptcha", saveCaptcha, false)
-	if writeAuthRequired {
-		handleFunc(r, "/login", serveLogin, false)
-	}
 	http.Handle("/", r)
 
 	fmt.Println("start to listen at ", port)
@@ -97,6 +97,7 @@ func main() {
 
 func handleFunc(r *mux.Router, path string, f func(http.ResponseWriter, *http.Request), requiredGzip bool) {
 	wrap := go_utils.DumpRequest(f)
+	wrap = go_utils.MustAuth(wrap, authParam)
 	if requiredGzip {
 		wrap = go_utils.GzipHandlerFunc(wrap)
 	}
